@@ -1,5 +1,35 @@
 <odoo>
-  <!-- Lista Kanban por empleado -->
+  <!-- LISTA: añadimos columnas al final, sin depender de un campo ancla -->
+  <record id="mrp_workorder_view_tree_inherit_employee_queue" model="ir.ui.view">
+    <field name="name">mrp.workorder.tree.employee.queue</field>
+    <field name="model">mrp.workorder</field>
+    <field name="inherit_id" ref="mrp.mrp_production_workorder_tree_view"/>
+    <field name="arch" type="xml">
+      <xpath expr="//tree" position="inside">
+        <field name="employee_id"/>
+        <field name="employee_sequence" widget="handle"/>
+        <field name="in_employee_queue"/>
+      </xpath>
+    </field>
+  </record>
+
+  <!-- FORMULARIO: bloque simple con nuestros campos -->
+  <record id="mrp_workorder_view_form_inherit_employee_queue" model="ir.ui.view">
+    <field name="name">mrp.workorder.form.employee.queue</field>
+    <field name="model">mrp.workorder</field>
+    <field name="inherit_id" ref="mrp.mrp_production_workorder_form_view_inherit"/>
+    <field name="arch" type="xml">
+      <xpath expr="//sheet//group" position="inside">
+        <group string="Cola por empleado">
+          <field name="employee_id"/>
+          <field name="employee_sequence"/>
+          <field name="in_employee_queue"/>
+        </group>
+      </xpath>
+    </field>
+  </record>
+
+  <!-- Acción/menú de cola (ya lo tenías): fuerza agrupar por empleado -->
   <record id="action_mrp_workorder_employee_queue" model="ir.actions.act_window">
     <field name="name">Cola por empleado</field>
     <field name="res_model">mrp.workorder</field>
@@ -13,45 +43,4 @@
             parent="mrp.menu_mrp_manufacturing"
             action="action_mrp_workorder_employee_queue"
             sequence="25"/>
-
-  <!-- Añadir campos a las vistas de workorder -->
-  <record id="mrp_workorder_view_tree_inherit_employee_queue" model="ir.ui.view">
-    <field name="name">mrp.workorder.tree.employee.queue</field>
-    <field name="model">mrp.workorder</field>
-    <field name="inherit_id" ref="mrp.mrp_workorder_view_tree"/>
-    <field name="arch" type="xml">
-      <xpath expr="//tree/field[@name='workcenter_id']" position="after">
-        <field name="employee_id"/>
-        <field name="employee_sequence" widget="handle"/>
-        <field name="in_employee_queue"/>
-      </xpath>
-    </field>
-  </record>
-
-  <record id="mrp_workorder_view_form_inherit_employee_queue" model="ir.ui.view">
-    <field name="name">mrp.workorder.form.employee.queue</field>
-    <field name="model">mrp.workorder</field>
-    <field name="inherit_id" ref="mrp.mrp_workorder_view_form"/>
-    <field name="arch" type="xml">
-      <xpath expr="//sheet//group" position="inside">
-        <group string="Cola por empleado">
-          <field name="employee_id"/>
-          <field name="employee_sequence"/>
-          <field name="in_employee_queue"/>
-        </group>
-      </xpath>
-    </field>
-  </record>
-
-  <!-- Búsqueda con agrupación por empleado -->
-  <record id="mrp_workorder_view_search_inherit_employee_queue" model="ir.ui.view">
-    <field name="name">mrp.workorder.search.employee.queue</field>
-    <field name="model">mrp.workorder</field>
-    <field name="inherit_id" ref="mrp.mrp_workorder_view_search"/>
-    <field name="arch" type="xml">
-      <xpath expr="//search" position="inside">
-        <filter name="group_by_employee" string="Empleado" context="{'group_by':'employee_id'}"/>
-      </xpath>
-    </field>
-  </record>
 </odoo>
