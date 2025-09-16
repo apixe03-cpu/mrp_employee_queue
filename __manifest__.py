@@ -1,16 +1,19 @@
+
 {
-    "name": "MRP Employee Queue",
+    "name": "MRP Work Queue (Admin Planner + Next Order)",
     "version": "18.0.1.0.0",
-    "summary": "Cola de órdenes de trabajo por empleado",
-    "category": "Manufacturing/Manufacturing",
-    "author": "Batiplane + OCA style",
+    "summary": "Planificador por empleado con prioridad drag-and-drop y botón 'Siguiente orden' para planta",
+    "author": "ChatGPT helper",
     "license": "LGPL-3",
     "depends": ["mrp", "hr"],
     "data": [
+        "security/groups.xml",
         "security/ir.model.access.csv",
-        "views/mrp_workorder_views.xml",
-        "views/hr_employee_views.xml",
+        "views/menu.xml",
+        "views/queue_item_views.xml",
+        "views/planner_views.xml",
+        "views/employee_views.xml",
+        "wizard/next_workorder_wizard_views.xml"
     ],
-    "application": False,
-    "installable": True,
+    "application": true
 }
