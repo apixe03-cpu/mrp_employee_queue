@@ -1,11 +1,12 @@
 <odoo>
-  <!-- LISTA: añadimos columnas al final, sin depender de un campo ancla -->
+  <!-- LISTA: hereda el árbol correcto y agrega columnas al final -->
   <record id="mrp_workorder_view_tree_inherit_employee_queue" model="ir.ui.view">
     <field name="name">mrp.workorder.tree.employee.queue</field>
     <field name="model">mrp.workorder</field>
     <field name="inherit_id" ref="mrp.mrp_production_workorder_tree_view"/>
     <field name="arch" type="xml">
-      <xpath expr="//tree" position="inside">
+      <!-- Soportar <tree> o <list> según la versión/tema -->
+      <xpath expr="//*[self::tree or self::list]" position="inside">
         <field name="employee_id"/>
         <field name="employee_sequence" widget="handle"/>
         <field name="in_employee_queue"/>
@@ -13,7 +14,7 @@
     </field>
   </record>
 
-  <!-- FORMULARIO: bloque simple con nuestros campos -->
+  <!-- FORMULARIO queda igual -->
   <record id="mrp_workorder_view_form_inherit_employee_queue" model="ir.ui.view">
     <field name="name">mrp.workorder.form.employee.queue</field>
     <field name="model">mrp.workorder</field>
@@ -29,7 +30,7 @@
     </field>
   </record>
 
-  <!-- Acción/menú de cola (ya lo tenías): fuerza agrupar por empleado -->
+  <!-- Acción/menú (sin cambios) -->
   <record id="action_mrp_workorder_employee_queue" model="ir.actions.act_window">
     <field name="name">Cola por empleado</field>
     <field name="res_model">mrp.workorder</field>
